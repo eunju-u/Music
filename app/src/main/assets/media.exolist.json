@@ -1,0 +1,120 @@
+{
+  "list": [
+    {
+      "category": "like",
+      "description": "like palylists",
+      "items": [
+        {
+          "id": 0,
+          "title": "여름이잖아",
+          "singer": "BIG Naughty (서동현) _ Feat. MARK (마크) of NCT",
+          "uri": "asset:///BIG Naughty - Sunkissed.mp3",
+          "image": "img_sunkissed"
+        },
+        {
+          "id": 1,
+          "title": "To.X",
+          "singer": "태연",
+          "uri": "asset:///태연 - To.X.mp3",
+          "image": "img_to_x"
+        },
+        {
+          "id": 2,
+          "title": "FOREVER 1",
+          "singer": "소녀시대",
+          "uri": "asset:///소녀시대 - FOREVER 1.mp3",
+          "image": "img_forever_1"
+        },
+        {
+          "id": 3,
+          "title": "아이와 나의 바다",
+          "singer": "IU",
+          "uri": "asset:///IU - 아이와 나의 바다.mp3",
+          "image": "img_my_sea"
+        }
+      ]
+    },
+    {
+      "category": "hot",
+      "description": "hot palylists",
+      "items": [
+        {
+          "id": 0,
+          "title": "TOMBOY",
+          "singer": "(여자)아이들",
+          "uri": "asset:///(G)I-DLE -TOMBOY.mp3",
+          "image": "img_tomboy"
+        },
+        {
+          "id": 1,
+          "title": "2002",
+          "singer": "Anne Marie",
+          "uri": "asset:///Anne Marie - 2002.mp3",
+          "image": "img_2002"
+        },
+        {
+          "id": 2,
+          "title": "Small girl (feat. D.O.)",
+          "singer": "이영지",
+          "uri": "asset:///이영지 - Small girl.mp3",
+          "image": "img_small_girl"
+        },
+        {
+          "id": 3,
+          "title": "Ice Cream Cake",
+          "singer": "Red Velvet",
+          "uri": "asset:///Red Velvet - Ice Cream Cake.mp3",
+          "image": "img_ice_cream_cake"
+        }
+      ]
+    },
+    {
+      "category": "new",
+      "description": "new palylists",
+      "items": [
+        {
+          "id": 0,
+          "title": "Love_wins_all",
+          "singer": "아이유(UI)",
+          "uri": "asset:///IU -Love wins all.mp3",
+          "image": "img_love_wins_all"
+        },
+        {
+          "id": 1,
+          "title": "HypeBoy",
+          "singer": "NewJeans",
+          "uri": "asset:///NewJeans - Hype Boy.mp3",
+          "image": "img_hypeboy"
+        },
+        {
+          "id": 2,
+          "title": "Armageddon",
+          "singer": "aespa",
+          "uri": "asset:///aespa - Armageddon.mp3",
+          "image": "img_armageddon"
+        },
+        {
+          "id": 3,
+          "title": "첫 사랑니 (Rum Pum Pum Pum)",
+          "singer": "f(x)",
+          "uri": "asset:///f(x) - rum_pum_pum_pum.mp3",
+          "image": "img_rum_pum_pum_pum"
+        },
+        {
+          "id": 4,
+          "title": "How Sweet",
+          "singer": "New Jeans",
+          "uri": "asset:///NewJeans - How Sweet.mp3",
+          "image": "img_how_sweet"
+        },
+        {
+          "id": 5,
+          "title": "Talk & Talk",
+          "singer": "프로미스나인 (fromis_9)",
+          "uri": "asset:///fromis_9 - Talk & Talk.mp3",
+          "image": "img_talk_and_talk"
+        }
+      ]
+    }
+  ]
+}

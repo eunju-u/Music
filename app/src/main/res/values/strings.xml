@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">music</string>
+
+    <string name="str_home">홈</string>
+    <string name="str_title">제목</string>
+    <string name="str_singer">가수</string>
+    <string name="str_image">이미지</string>
+    <string name="str_btn">버튼</string>
+    <string name="str_category">카테고리</string>
+    <string name="str_description">설명</string>
 </resources>
