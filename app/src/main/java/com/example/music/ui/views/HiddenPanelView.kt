@@ -22,11 +22,11 @@ class HiddenPanelView(context: Context) : LinearLayout(context) {
     private lateinit var playBtn: ImageButton
 
     private var isPlay = false
-    private var audiouri: String? = null
+    private lateinit var item: MusicItem
 
     private var closeClickListener: (() -> Unit)? = null
     private var progressListener: ((Int, Boolean) -> Unit)? = null
-    private var playClickListener: ((ImageButton?, Boolean, String?) -> Unit)? = null
+    private var playClickListener: ((ImageButton?, Boolean, MusicItem) -> Unit)? = null
 
     init {
         setView(context)
@@ -57,7 +57,7 @@ class HiddenPanelView(context: Context) : LinearLayout(context) {
         playBtn = view.findViewById(R.id.hidden_panel_play_btn)
         playBtn.setOnClickListener {
             isPlay = !isPlay
-            playClickListener?.invoke(playBtn, isPlay, audiouri)
+            playClickListener?.invoke(playBtn, isPlay, item)
         }
         addView(view)
     }
@@ -65,7 +65,7 @@ class HiddenPanelView(context: Context) : LinearLayout(context) {
     fun setViewDate(item: MusicItem) {
         title.text = item.title
         singer.text = item.singer
-        audiouri = item.uri
+        this.item = item
 
         //문자열을 R의 id 찾기
         val image = context.resources.getIdentifier(item.image, "drawable", context.packageName)
@@ -103,7 +103,7 @@ class HiddenPanelView(context: Context) : LinearLayout(context) {
     }
 
     //재생 버튼 Listener
-    fun setOnPlayButtonClickListener(listener: ((ImageButton?, Boolean, String?) -> Unit)?) {
+    fun setOnPlayButtonClickListener(listener: ((ImageButton?, Boolean, MusicItem) -> Unit)?) {
         this.playClickListener = listener
     }
 }

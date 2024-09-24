@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.music.Menu
 import com.example.music.R
 import com.example.music.databinding.ActivityMainBinding
+import com.example.music.dto.MusicItem
 import com.example.music.ui.base.BaseActivity
 import com.example.music.ui.base.BaseFragment
 import com.example.music.ui.fragment.HomeFragment
@@ -105,7 +106,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 upPanelLayout.panelState = PanelState.COLLAPSED
 
                 if (isMusicPlay) {
-                    startMusic(item.uri)
+                    startMusic(item)
                 }
             }
         }
@@ -161,10 +162,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
-    private fun startMusic(url: String?) {
-        if (url.isNullOrEmpty()) return
+    private fun startMusic(item: MusicItem) {
+        if (item.uri.isNullOrEmpty()) return
         //service 실행
-        binder?.setMediaPlayer(applicationContext, url) //자동적으로 실행해준다.
+        binder?.setMediaPlayer(applicationContext, item) //자동적으로 실행해준다.
     }
 
     //bind 연결 후 호출

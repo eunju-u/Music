@@ -14,8 +14,8 @@ class StickyPanelView(context: Context) : LinearLayout(context) {
     private lateinit var title: TextView
     private lateinit var singer: TextView
     private var isPlay = false
-    private var audiouri: String? = null
-    private var listener: ((ImageButton?, Boolean, String?) -> Unit)? = null
+    private lateinit var item: MusicItem
+    private var listener: ((ImageButton?, Boolean, MusicItem) -> Unit)? = null
 
     init {
         setView(context)
@@ -27,7 +27,7 @@ class StickyPanelView(context: Context) : LinearLayout(context) {
         playBtn = view.findViewById(R.id.sticky_panel_play_btn)
         playBtn.setOnClickListener {
             isPlay = !isPlay
-            listener?.invoke(playBtn, isPlay, audiouri)
+            listener?.invoke(playBtn, isPlay, item)
         }
         title = view.findViewById(R.id.sticky_panel_title)
         singer = view.findViewById(R.id.sticky_panel_singer)
@@ -37,14 +37,14 @@ class StickyPanelView(context: Context) : LinearLayout(context) {
     fun setViewData(item: MusicItem) {
         title.text = item.title
         singer.text = item.singer
-        audiouri = item.uri
+        this.item = item
     }
 
     fun setImage(id: Int) {
         playBtn.setImageDrawable(ContextCompat.getDrawable(context, id))
     }
 
-    fun setOnPlayButtonClickListener(listener: ((ImageButton?, Boolean, String?) -> Unit)?) {
+    fun setOnPlayButtonClickListener(listener: ((ImageButton?, Boolean, MusicItem) -> Unit)?) {
         this.listener = listener
     }
 

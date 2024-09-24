@@ -12,4 +12,14 @@ class MusicService : Service() {
     override fun onBind(intent: Intent): IBinder {
         return binder
     }
+
+    override fun onCreate() {
+        super.onCreate()
+        binder.initMediaSession(this) // MediaSession 초기화
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binder.releaseMediaSession() // MediaSession 해제
+    }
 }
