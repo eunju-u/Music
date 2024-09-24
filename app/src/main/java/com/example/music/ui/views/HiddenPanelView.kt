@@ -1,6 +1,5 @@
 package com.example.music.ui.views
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.ImageButton
@@ -25,7 +24,9 @@ class HiddenPanelView(context: Context) : LinearLayout(context) {
     private var isPlay = false
     private var audiouri: String? = null
 
-    private var hiddenViewListener: OnHiddenViewClickListener? = null
+    private var closeClickListener: (() -> Unit)? = null
+    private var progressListener: ((Int, Boolean) -> Unit)? = null
+    private var playClickListener: ((ImageButton?, Boolean, String?) -> Unit)? = null
 
     init {
         setView(context)
@@ -40,7 +41,7 @@ class HiddenPanelView(context: Context) : LinearLayout(context) {
         seekBar = view.findViewById(R.id.hidden_panel_seek_bar)
         seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                hiddenViewListener?.progress(seekBar, progress, fromUser)
+                progressListener?.invoke(progress, fromUser)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -51,17 +52,16 @@ class HiddenPanelView(context: Context) : LinearLayout(context) {
         })
         downBtn = view.findViewById(R.id.hidden_panel_down_btn)
         downBtn.setOnClickListener {
-            hiddenViewListener?.clickCloseButton()
+            closeClickListener?.invoke()
         }
         playBtn = view.findViewById(R.id.hidden_panel_play_btn)
         playBtn.setOnClickListener {
             isPlay = !isPlay
-            hiddenViewListener?.clickPlayButton(playBtn, isPlay, audiouri)
+            playClickListener?.invoke(playBtn, isPlay, audiouri)
         }
         addView(view)
     }
 
-    @SuppressLint("DiscouragedApi")
     fun setViewDate(item: MusicItem) {
         title.text = item.title
         singer.text = item.singer
@@ -92,13 +92,18 @@ class HiddenPanelView(context: Context) : LinearLayout(context) {
         playBtn.setImageDrawable(ContextCompat.getDrawable(context, id))
     }
 
-    interface OnHiddenViewClickListener {
-        fun progress(seekBar: SeekBar?, progress: Int, fromUser: Boolean)
-        fun clickPlayButton(view: ImageButton, isPlay: Boolean, url: String?)
-        fun clickCloseButton()
+    //닫기 버튼 Listener
+    fun setCloseClickListener(listener: (() -> Unit)?) {
+        this.closeClickListener = listener
     }
 
-    fun setHiddenViewClickListener(listener: OnHiddenViewClickListener) {
-        this.hiddenViewListener = listener
+    //progress update Listener
+    fun setProgressListener(listener: ((Int, Boolean) -> Unit)?) {
+        this.progressListener = listener
+    }
+
+    //재생 버튼 Listener
+    fun setOnPlayButtonClickListener(listener: ((ImageButton?, Boolean, String?) -> Unit)?) {
+        this.playClickListener = listener
     }
 }

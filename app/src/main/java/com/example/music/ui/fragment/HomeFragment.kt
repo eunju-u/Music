@@ -22,7 +22,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private var mainParent: LinearLayout? = null
-    private var listener: onItemClickListener? = null
+    private var listener: ((View?, MusicItem?) -> Unit)? = null
 
     override fun getLayout(): Int {
         return R.layout.fragment_home
@@ -39,8 +39,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         categoryView.setOnClickListItemLister(object :
                             CategoryView.OnClickListItemListener {
                             override fun onItemSelected(view: View?, item: MusicItem?) {
-                                listener?.onClicked(view, item)
-
+                                listener?.invoke(view, item)
                             }
                         })
                         categoryView.setViewDate(item.category, item.description, item.items)
@@ -62,12 +61,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return view
     }
 
-    fun setOnItemClickListener(listener: onItemClickListener?) {
+    fun setOnItemClickListener(listener: ((View?, MusicItem?) -> Unit)?) {
         this.listener = listener
-    }
-
-    interface onItemClickListener {
-        fun onClicked(view: View?, item: MusicItem?)
     }
 
     companion object {

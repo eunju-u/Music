@@ -7,18 +7,15 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.View
-import android.widget.ImageButton
 import android.widget.RelativeLayout
-import android.widget.SeekBar
 import androidx.lifecycle.lifecycleScope
 import com.example.music.Menu
 import com.example.music.R
 import com.example.music.databinding.ActivityMainBinding
-import com.example.music.dto.MusicItem
-import com.example.music.service.AudioServiceBinder
 import com.example.music.ui.base.BaseActivity
 import com.example.music.ui.base.BaseFragment
 import com.example.music.ui.fragment.HomeFragment
+import com.example.music.service.AudioServiceBinder
 import com.example.music.service.MusicService
 import com.example.music.ui.views.StickyPanelView
 import com.example.music.ui.views.HiddenPanelView
@@ -66,7 +63,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onStart() {
         super.onStart()
-        //select 되는 메뉴를 고른다. Home만 있음.
+        //select 되는 메뉴를 고른다. Home 으로만 셋팅해도됨.
         vm.nowTab = Menu.HOME
     }
 
@@ -101,33 +98,27 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
 
         //listener 대신 가독성 높고 직관적인 람다로 처리하기
-        homeFragment.setOnItemClickListener(object : HomeFragment.onItemClickListener {
-            override fun onClicked(view: View?, item: MusicItem?) {
-                item?.run {
-                    stickyPanelView.setViewData(item)
-                    hiddenPanelView.setViewDate(item)
-                    upPanelLayout.panelState = PanelState.COLLAPSED
+        homeFragment.setOnItemClickListener { view, item ->
+            item?.run {
+                stickyPanelView.setViewData(item)
+                hiddenPanelView.setViewDate(item)
+                upPanelLayout.panelState = PanelState.COLLAPSED
 
-                    if (isMusicPlay) {
-                        startMusic(item.uri)
-                    }
+                if (isMusicPlay) {
+                    startMusic(item.uri)
                 }
             }
-        })
+        }
 
-
-        stickyPanelView.setOnPlayButtonClickListener(object :
-            StickyPanelView.OnPlayButtonClickListener {
-            override fun OnClicked(view: ImageButton?, isPlay: Boolean, audioUri: String?) {
-                isMusicPlay = isPlay
-                setPlayingImage(isPlay)
-                if (isPlay) {
-                    startMusic(audioUri)
-                } else {
-                    binder?.pauseMusic()
-                }
+        stickyPanelView.setOnPlayButtonClickListener { _, isPlay, audiourl ->
+            isMusicPlay = isPlay
+            setPlayingImage(isPlay)
+            if (isPlay) {
+                startMusic(audiourl)
+            } else {
+                binder?.pauseMusic()
             }
-        })
+        }
 
         upPanelLayout.addPanelSlideListener(object : SlidingUpPanelLayout.PanelSlideListener {
             //slideOffset는 뷰에는 알파값을 조정해서 투명도랑 보이게 하는걸 조절한다.
@@ -150,29 +141,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         })
 
-        hiddenPanelView.setHiddenViewClickListener(object : HiddenPanelView.OnHiddenViewClickListener {
-            override fun progress(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    /*현재 프로그래스를 넘겨준다. */
-                    binder?.seekTo(progress)
-                }
+        hiddenPanelView.setCloseClickListener {
+            upPanelLayout.panelState = PanelState.COLLAPSED
+        }
+        hiddenPanelView.setProgressListener { progress, fromUser ->
+            if (fromUser) {
+                /*현재 프로그래스를 넘겨준다. */
+                binder?.seekTo(progress)
             }
-
-            override fun clickPlayButton(view: ImageButton, isPlay: Boolean, url: String?) {
-                isMusicPlay = isPlay
-                setPlayingImage(isPlay)
-                if (isPlay) {
-                    startMusic(url)
-                } else {
-                    binder?.pauseMusic()
-                }
+        }
+        hiddenPanelView.setOnPlayButtonClickListener { _, isPlay, audiourl ->
+            isMusicPlay = isPlay
+            setPlayingImage(isPlay)
+            if (isPlay) {
+                startMusic(audiourl)
+            } else {
+                binder?.pauseMusic()
             }
-
-            override fun clickCloseButton() {
-                upPanelLayout.panelState = PanelState.COLLAPSED
-            }
-
-        })
+        }
     }
 
     private fun startMusic(url: String?) {
